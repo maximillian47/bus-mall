@@ -17,7 +17,6 @@ function Product(name, fileExtension = 'jpg') {
   allProducts.push(this);
 }
 
-// new products objects here
 new Product('bag');
 new Product('banana');
 new Product('bathroom');
