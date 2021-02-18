@@ -70,14 +70,14 @@ function renderProduct(){
   allProducts[thirdIndex].views++;
 }
 
-function renderResults(){
-  let myList = document.querySelector('ul');
-  for (let i = 0; i < allProducts.length; i++){
-    let li = document.createElement('li');
-    li.textContent = `${allProducts[i].name} had ${allProducts[i].votes} votes, and was seen ${allProducts[i].views} times`;
-    myList.appendChild(li);
-  }
-}
+// function renderResults(){
+//   let myList = document.querySelector('ul');
+//   for (let i = 0; i < allProducts.length; i++){
+//     let li = document.createElement('li');
+//     li.textContent = `${allProducts[i].name} had ${allProducts[i].votes} votes, and was seen ${allProducts[i].views} times`;
+//     myList.appendChild(li);
+//   }
+// } 
 
 function handleClick(event){
   let productClicked = event.target.title;
@@ -101,15 +101,13 @@ function handleClick(event){
   }
 }
 
-function handleButtonClick(event){ 
-  if(totalClicks === clicksAllowed){
-    renderResults();
-  }
-}
+// function handleButtonClick(event){ 
+//   if(totalClicks === clicksAllowed){
+//     renderResults();
+//   }
+// }
 
 renderProduct();
 
 myContainer.addEventListener('click', handleClick);
-myButton.addEventListener('click', handleButtonClick);
-
-// testing testing 123
+// myButton.addEventListener('click', handleButtonClick);
