@@ -39,20 +39,20 @@ new Product('water-can');
 new Product('wine-glass');
 
 
-function getRandomIndex(){
+function getRandomIndex() {
   return Math.floor(Math.random() * allProducts.length);
 }
 
-function renderProduct(){
+function renderProduct() {
   let indexArray = [];
 
   while (indexArray.length < 3) {
     let rand = getRandomIndex();
-    while (!indexArray.includes(rand)){
+    while (!indexArray.includes(rand)) {
       indexArray.push(rand);
     }
   }
-
+  // console.log(indexArray);
   let firstIndex = indexArray.pop();
   let secondIndex = indexArray.pop();
   let thirdIndex = indexArray.pop();
@@ -79,7 +79,7 @@ function renderProduct(){
 //   }
 // } 
 
-function handleClick(event){
+function handleClick(event) {
   let productClicked = event.target.title;
 
   if (event.target === myContainer) {
@@ -88,15 +88,15 @@ function handleClick(event){
 
   totalClicks++;
 
-  for (let i = 0; i < allProducts.length; i++){
-    if(productClicked === allProducts[i].name) {
+  for (let i = 0; i < allProducts.length; i++) {
+    if (productClicked === allProducts[i].name) {
       allProducts[i].votes++;
     }
   }
 
   renderProduct();
-  
-  if (totalClicks === clicksAllowed){
+
+  if (totalClicks === clicksAllowed) {
     myContainer.removeEventListener('click', handleClick);
   }
 }
@@ -108,6 +108,44 @@ function handleClick(event){
 // }
 
 renderProduct();
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+    label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    scales: {
+    yAxes: [{
+    ticks: {
+    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
 
 myContainer.addEventListener('click', handleClick);
 // myButton.addEventListener('click', handleButtonClick);
