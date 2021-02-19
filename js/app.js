@@ -110,49 +110,48 @@ function renderProdChart() {
     productVotes.push(allProducts[i].votes);
   }
 
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var myChart = new Chart(ctx, {
+
+  var chartStuff = {
     type: 'bar',
     data: {
-      labels: productNames,
+      label: productNames,
       datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
+        label: '# of Views',
+        data: productViews,
+        backgroundColor:
           'rgba(255, 99, 132, 0.2)',
-        ],
-        borderColor: [
+
+        borderColor:
           'rgba(255, 99, 132, 1)',
-        ],
+
         borderWidth: 1
-      }]
-    },
-    {
-      labels: productNames,
-      datasets: [{
+      },
+      {
         label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
+        data: productVotes,
+        backgroundColor:
           'rgba(75, 192, 192, 0.2)',
-        ],
-        borderColor: [
+
+        borderColor:
           'rgba(75, 192, 192, 0.2)',
-        ],
+
         borderWidth: 1
       }]
     },
+    responsive: false,
     options: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
     }
-  }
-});
+  };
+
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let myChart = new Chart(ctx, chartStuff);
 }
-
-
 
 myContainer.addEventListener('click', handleClick);
