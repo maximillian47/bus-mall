@@ -18,27 +18,33 @@ function Product(name, fileExtension = 'jpg') {
   allProducts.push(this);
 }
 
-new Product('bag');
-new Product('banana');
-new Product('bathroom');
-new Product('boots');
-new Product('breakfast');
-new Product('bubblegum');
-new Product('chair');
-new Product('cthulhu');
-new Product('dog-duck');
-new Product('dragon');
-new Product('pen');
-new Product('pet-sweep');
-new Product('scissors');
-new Product('shark');
-new Product('sweep', 'png');
-new Product('tauntaun');
-new Product('unicorn');
-new Product('usb', 'gif');
-new Product('water-can');
-new Product('wine-glass');
+let retrievedProducts = localStorage.getItem('products');
 
+if(retrievedProducts){
+  let parsedProducts = JSON.parse(retrievedProducts);
+  allProducts = parsedProducts;
+} else {
+  new Product('bag');
+  new Product('banana');
+  new Product('bathroom');
+  new Product('boots');
+  new Product('breakfast');
+  new Product('bubblegum');
+  new Product('chair');
+  new Product('cthulhu');
+  new Product('dog-duck');
+  new Product('dragon');
+  new Product('pen');
+  new Product('pet-sweep');
+  new Product('scissors');
+  new Product('shark');
+  new Product('sweep', 'png');
+  new Product('tauntaun');
+  new Product('unicorn');
+  new Product('usb', 'gif');
+  new Product('water-can');
+  new Product('wine-glass');
+}
 
 function getRandomIndex() {
   return Math.floor(Math.random() * allProducts.length);
@@ -93,6 +99,8 @@ function handleClick(event) {
   if (totalClicks === clicksAllowed) {
     myContainer.removeEventListener('click', handleClick);
     renderProdChart();
+    let stringifiedProducts = JSON.stringify(allProducts);
+    localStorage.setItem('products', stringifiedProducts);
   }
   renderProdChart();
 }
@@ -110,49 +118,48 @@ function renderProdChart() {
     productVotes.push(allProducts[i].votes);
   }
 
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var myChart = new Chart(ctx, {
+
+  var chartStuff = {
     type: 'bar',
     data: {
-      labels: productNames,
+      label: productNames,
       datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
+        label: '# of Views',
+        data: productViews,
+        backgroundColor:
           'rgba(255, 99, 132, 0.2)',
-        ],
-        borderColor: [
+
+        borderColor:
           'rgba(255, 99, 132, 1)',
-        ],
+
         borderWidth: 1
-      }]
-    },
-    {
-      labels: productNames,
-      datasets: [{
+      },
+      {
         label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
+        data: productVotes,
+        backgroundColor:
           'rgba(75, 192, 192, 0.2)',
-        ],
-        borderColor: [
+
+        borderColor:
           'rgba(75, 192, 192, 0.2)',
-        ],
+
         borderWidth: 1
       }]
     },
+    responsive: false,
     options: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
     }
-  }
-});
+  };
+
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let myChart = new Chart(ctx, chartStuff);
 }
-
-
 
 myContainer.addEventListener('click', handleClick);
